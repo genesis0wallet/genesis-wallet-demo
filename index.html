@@ -7,46 +7,80 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="top-header">
-    <img src="genesis-logo.png" alt="Genesis Wallet" class="logo" />
-    <h1>Genesis Wallet</h1>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <button id="closeSidebar">←</button>
+      <h2>Accounts</h2>
+    </div>
+    <div class="accounts">
+      <div class="account active">
+        <div class="avatar purple">M</div>
+        <span>Main MAC 1</span>
+      </div>
+      <div class="account">
+        <div class="avatar grey">M</div>
+        <span>Main MAC 2</span>
+      </div>
+    </div>
+    <div class="sidebar-actions">
+      <button>+</button>
+      <button>⚙️</button>
+    </div>
+  </aside>
+
+  <!-- Header -->
+  <header>
+    <button id="openSidebar">☰</button>
+    <img src="genesis-logo.png" alt="Genesis Logo" class="logo" />
+    <div class="profile">
+      <span>@AndChasm3731</span>
+      <small>Main MAC 1</small>
+    </div>
   </header>
 
+  <!-- Main -->
   <main>
-    <section class="balance-card">
-      <h2>Total Balance</h2>
-      <div class="amount">3.2145 SOL</div>
-      <p>≈ $450.28 USD</p>
-    </section>
+    <div class="balance-section">
+      <h1>RM 37,839.24</h1>
+      <p class="change">+RM 9.56 <span>+0.03%</span></p>
+    </div>
 
-    <section class="assets">
-      <div class="asset">
-        <h3>SOL</h3>
-        <p>3.2145</p>
-      </div>
-      <div class="asset">
-        <h3>USDC</h3>
-        <p>1,200</p>
-      </div>
-      <div class="asset">
-        <h3>BTC</h3>
-        <p>0.875</p>
-      </div>
-    </section>
+    <div class="actions">
+      <button>📥 Receive</button>
+      <button>📤 Send</button>
+      <button>🔄 Swap</button>
+      <button>💲 Buy</button>
+    </div>
 
-    <section class="ai-status">
-      <h2>T-Gen AI Security</h2>
-      <p class="status">Status: <span>Normal</span></p>
-      <p>Threat Level: <strong>0 Active</strong></p>
-    </section>
+    <div class="tokens">
+      <h2>Tokens</h2>
+      <div class="token-card">
+        <img src="https://cryptologos.cc/logos/solana-sol-logo.svg" alt="SOL" />
+        <div class="token-info">
+          <h3>Solana</h3>
+          <p>44.44855 SOL</p>
+        </div>
+        <div class="token-value">
+          <h3>RM 38,534.64</h3>
+          <p class="up">+RM 2,350.20</p>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <nav class="action-bar">
-    <button>Send</button>
-    <button>Receive</button>
-    <button>Swap</button>
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <button class="active">🏠</button>
+    <button>🔁</button>
+    <button>🕒</button>
+    <button>⚙️</button>
   </nav>
 
-  <script src="script.js"></script>
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('openSidebar').onclick = () => sidebar.classList.add('show');
+    document.getElementById('closeSidebar').onclick = () => sidebar.classList.remove('show');
+  </script>
 </body>
 </html>
