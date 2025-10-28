@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Genesis Wallet Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Reset and base styles */
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A;
+            color: #E0E0E0;
+        }
+        a {
+            color: #00FFFF;
+            text-decoration: none;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #96A9EB;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.5;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #D9B2B2;
+        }
+        .card p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        .stat {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            flex: 1;
+            margin: 0 0.5rem;
+        }
+        .stat h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+            color: #96A9EB;
+        }
+        .stat p {
+            font-size: 0.85rem;
+            color: #C4C4C4;
+        }
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .button {
+            background: linear-gradient(90deg, #96A9EB, #D9B2B2);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #0A0A0A;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Genesis Wallet Demo</h1>
+        <p>Experience the future of Solana wallets with Genesis. This mockup demonstrates an adaptive interface designed for speed, intelligence, and absolute control.</p>
+        <div class="card">
+            <h2>Portfolio Overview</h2>
+            <p>Total Assets</p>
+            <div class="stats">
+                <div class="stat">
+                    <h3>3.2145</h3>
+                    <p>SOL</p>
+                </div>
+                <div class="stat">
+                    <h3>1,200</h3>
+                    <p>USDC</p>
+                </div>
+                <div class="stat">
+                    <h3>0.875</h3>
+                    <p>BTC</p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>AI Security Status</h2>
+            <p>Your wallet is secured by T-Gen AI with real-time threat monitoring.</p>
+            <div class="stats">
+                <div class="stat">
+                    <h3>Normal</h3>
+                    <p>Threat Level</p>
+                </div>
+                <div class="stat">
+                    <h3>Active</h3>
+                    <p>AI Mesh</p>
+                </div>
+                <div class="stat">
+                    <h3>0</h3>
+                    <p>Alerts</p>
+                </div>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="button" onclick="alert('Demo only - no live functionality.')">Send</button>
+            <button class="button" onclick="alert('Demo only - no live functionality.')">Receive</button>
+            <button class="button" onclick="alert('Demo only - no live functionality.')">Swap</button>
+        </div>
+    </div>
+</body>
+</html>
