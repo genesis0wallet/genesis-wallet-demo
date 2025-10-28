@@ -7,80 +7,50 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <button id="closeSidebar">←</button>
+  <div class="app-container">
+    <header class="header">
+      <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo" />
+      <h1>Genesis Wallet</h1>
+    </header>
+
+    <section class="accounts">
       <h2>Accounts</h2>
-    </div>
-    <div class="accounts">
-      <div class="account active">
-        <div class="avatar purple">M</div>
-        <span>Main MAC 1</span>
+      <div class="account-list">
+        <div class="account-card">Main MAC 1</div>
+        <div class="account-card">Main MAC 2</div>
       </div>
-      <div class="account">
-        <div class="avatar grey">M</div>
-        <span>Main MAC 2</span>
+    </section>
+
+    <main class="wallet-section">
+      <div class="balance-card">
+        <h3 class="balance-amount">RM 37,839.24</h3>
+        <p class="balance-change">+RM 9.56 (+0.03%)</p>
       </div>
-    </div>
-    <div class="sidebar-actions">
-      <button>+</button>
-      <button>⚙️</button>
-    </div>
-  </aside>
 
-  <!-- Header -->
-  <header>
-    <button id="openSidebar">☰</button>
-    <img src="genesis-logo.png" alt="Genesis Logo" class="logo" />
-    <div class="profile">
-      <span>@AndChasm3731</span>
-      <small>Main MAC 1</small>
-    </div>
-  </header>
+      <div class="action-bar">
+        <button>Receive</button>
+        <button>Send</button>
+        <button>Swap</button>
+        <button>Buy</button>
+      </div>
 
-  <!-- Main -->
-  <main>
-    <div class="balance-section">
-      <h1>RM 37,839.24</h1>
-      <p class="change">+RM 9.56 <span>+0.03%</span></p>
-    </div>
-
-    <div class="actions">
-      <button>📥 Receive</button>
-      <button>📤 Send</button>
-      <button>🔄 Swap</button>
-      <button>💲 Buy</button>
-    </div>
-
-    <div class="tokens">
-      <h2>Tokens</h2>
       <div class="token-card">
-        <img src="https://cryptologos.cc/logos/solana-sol-logo.svg" alt="SOL" />
-        <div class="token-info">
-          <h3>Solana</h3>
-          <p>44.44855 SOL</p>
-        </div>
-        <div class="token-value">
-          <h3>RM 38,534.64</h3>
-          <p class="up">+RM 2,350.20</p>
+        <h3>Tokens</h3>
+        <div class="token-item">
+          <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL" />
+          <div>
+            <h4>Solana</h4>
+            <p>44.4485 SOL</p>
+            <p>USD 8,039.35</p>
+            <p class="gain">+USD 495.60</p>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
 
-  <!-- Bottom Nav -->
-  <nav class="bottom-nav">
-    <button class="active">🏠</button>
-    <button>🔁</button>
-    <button>🕒</button>
-    <button>⚙️</button>
-  </nav>
-
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    document.getElementById('openSidebar').onclick = () => sidebar.classList.add('show');
-    document.getElementById('closeSidebar').onclick = () => sidebar.classList.remove('show');
-  </script>
+    <footer class="footer">
+      <p>© 2025 Genesis Wallet • Powered by T-Gen AI</p>
+    </footer>
+  </div>
 </body>
 </html>
