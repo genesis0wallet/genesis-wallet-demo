@@ -1,77 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Genesis Wallet Demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Genesis Wallet</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="logo">
-            <!-- Inline Genesis Logo SVG -->
-            <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 10c13.25 0 24 10.75 24 24s-10.75 24-24 24-24-10.75-24-24S36.75 10 50 10z" stroke="#00FFFF" stroke-width="6"/>
-                <path d="M50 62c13.25 0 24 10.75 24 24s-10.75 24-24 24-24-10.75-24-24S36.75 62 50 62z" stroke="#C084FC" stroke-width="6"/>
-            </svg>
-            <span class="logo-text">Genesis</span>
-        </div>
-        <div class="settings">⚙️</div>
-    </header>
-    <main class="main">
-        <!-- Portfolio Card -->
-        <section class="card portfolio">
-            <h2>Portfolio</h2>
-            <div class="totals">
-                <div class="total">
-                    <span class="value" id="solValue">3.2145</span>
-                    <span class="label">SOL</span>
-                </div>
-                <div class="total">
-                    <span class="value" id="usdcValue">1200</span>
-                    <span class="label">USDC</span>
-                </div>
-                <div class="total">
-                    <span class="value" id="btcValue">0.875</span>
-                    <span class="label">BTC</span>
-                </div>
-            </div>
-        </section>
-        <!-- AI Security Card -->
-        <section class="card ai-status">
-            <h2>AI Security Status</h2>
-            <div class="status-row">
-                <span class="status-label">Threat Level</span>
-                <span class="status-value status-normal">Normal</span>
-            </div>
-            <div class="status-row">
-                <span class="status-label">AI Mesh</span>
-                <span class="status-value status-active">Active</span>
-            </div>
-            <div class="status-row">
-                <span class="status-label">Alerts</span>
-                <span class="status-value" id="alertsValue">0</span>
-            </div>
-        </section>
-        <!-- Activity Feed -->
-        <section class="card activity">
-            <h2>Activity</h2>
-            <ul id="activityList">
-                <li>Behavioral anomaly isolated — 0.004 s</li>
-                <li>RPC mesh recalibrated successfully</li>
-                <li>Node sync complete</li>
-            </ul>
-        </section>
-    </main>
-    <!-- Floating Action Bar -->
-    <div class="action-bar">
-        <button onclick="demoAction()">Send</button>
-        <button onclick="demoAction()">Receive</button>
-        <button onclick="demoAction()">Swap</button>
-    </div>
-    <footer class="footer">
-        © 2025 Genesis Wallet · Engineered for Autonomy
-    </footer>
-    <script src="script.js"></script>
+  <header class="top-header">
+    <img src="assets/genesis-logo.svg" alt="Genesis Wallet" class="logo" />
+    <h1>Genesis Wallet</h1>
+  </header>
+
+  <main>
+    <section class="balance-card">
+      <h2>Total Balance</h2>
+      <div class="amount">3.2145 SOL</div>
+      <p>≈ $450.28 USD</p>
+    </section>
+
+    <section class="assets">
+      <div class="asset">
+        <h3>SOL</h3>
+        <p>3.2145</p>
+      </div>
+      <div class="asset">
+        <h3>USDC</h3>
+        <p>1,200</p>
+      </div>
+      <div class="asset">
+        <h3>BTC</h3>
+        <p>0.875</p>
+      </div>
+    </section>
+
+    <section class="ai-status">
+      <h2>T-Gen AI Security</h2>
+      <p class="status">Status: <span>Normal</span></p>
+      <p>Threat Level: <strong>0 Active</strong></p>
+    </section>
+  </main>
+
+  <nav class="action-bar">
+    <button>Send</button>
+    <button>Receive</button>
+    <button>Swap</button>
+  </nav>
+
+  <script src="script.js"></script>
 </body>
 </html>
