@@ -1,93 +1,88 @@
-function createBubbles(containerId, count=25){
-  const container=document.getElementById(containerId);
-  for(let i=0;i<count;i++){
-    const b=document.createElement('div');
-    b.classList.add('bubble');
-    b.style.left=Math.random()*100+'%';
-    b.style.animationDuration=3+Math.random()*4+'s';
-    b.style.animationDelay=Math.random()*2+'s';
-    b.style.width=b.style.height=4+Math.random()*6+'px';
-    container.appendChild(b);
-  }
+// PARTICLE BACKGROUND
+const canvas=document.getElementById('particleCanvas');
+const ctx=canvas.getContext('2d');
+let particles=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
+resize();window.onresize=resize;
+for(let i=0;i<60;i++){particles.push({
+  x:Math.random()*canvas.width,y:Math.random()*canvas.height,
+  r:Math.random()*2,speed:0.3+Math.random()*0.5,dir:Math.random()*360
+});}
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='rgba(0,255,179,0.7)';
+  particles.forEach(p=>{
+    p.x+=Math.cos(p.dir)*p.speed;
+    p.y+=Math.sin(p.dir)*p.speed;
+    if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;
+    if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+  });
+  requestAnimationFrame(draw);
 }
-createBubbles('bubbleLoad');
+draw();
 
+// LOADING
 const aiSound=document.getElementById('aiSound');
 setTimeout(()=>{
   document.getElementById('scan-screen').classList.remove('active');
+  document.getElementById('dashboard').classList.remove('hidden');
   aiSound.play();
 },3000);
 
-const tokens=document.querySelectorAll('.token');
+// POPUP & LOGIC
 const popup=document.getElementById('tokenPopup');
 const popupTitle=document.getElementById('popupTitle');
 const popupAmount=document.getElementById('popupAmount');
 const popupInner=document.getElementById('popupInner');
+const successPopup=document.getElementById('successPopup');
+const successMsg=document.getElementById('successMessage');
 const ping=document.getElementById('pingSound');
 const successSound=document.getElementById('successSound');
-const successPopup=document.getElementById('successPopup');
-const successMessage=document.getElementById('successMessage');
 
-tokens.forEach(t=>{
-  t.addEventListener('click',()=>{
-    const token=t.dataset.token;
-    popupTitle.textContent=token;
-    popupAmount.textContent=`Balance: ${t.querySelector('p').innerText}`;
+document.querySelectorAll('.token').forEach(t=>{
+  t.onclick=()=>{
     popup.classList.add('active');
+    popupTitle.textContent=t.dataset.token;
+    popupAmount.textContent=`Balance: ${t.querySelector('p').innerText}`;
     ping.play();
-  });
+  };
 });
 document.querySelector('.closePopup').onclick=()=>popup.classList.remove('active');
 
 document.getElementById('receiveAction').onclick=()=>{
   popupInner.innerHTML=`
-    <div class="qr"></div>
-    <p>Address: So1aNa12345DummYAddre55xX</p>
-    <p>Network: <b>SOLANA</b></p>`;
+    <div class='qr'></div>
+    <p>Address: So1aNa12345Dummy</p>
+    <p>Network: SOLANA</p>`;
 };
 document.getElementById('sendAction').onclick=()=>{
   popupInner.innerHTML=`
-    <input type="number" placeholder="Amount" />
-    <input type="text" placeholder="Recipient Address" />
-    <button id="confirmSend" class="glow">Send</button>`;
-  document.getElementById('confirmSend').onclick=()=>simulateFlow('Sending Transaction via','Send Complete: Funds delivered securely.');
+    <input type='number' placeholder='Amount' />
+    <input type='text' placeholder='Recipient Address' />
+    <button id='confirmSend' class='glow'>Send</button>`;
+  document.getElementById('confirmSend').onclick=()=>simulateFlow('Sending transaction…','Funds delivered securely.');
 };
 document.getElementById('swapAction').onclick=()=>{
   popupInner.innerHTML=`
-    <input type="number" placeholder="Amount to Swap" />
-    <input type="text" placeholder="Target Token (e.g., USDC)" />
-    <button id="confirmSwap" class="glow">Swap</button>`;
-  document.getElementById('confirmSwap').onclick=()=>simulateFlow('Swapping Assets via','Swap Complete: New balance updated.');
+    <input type='number' placeholder='Amount to swap' />
+    <input type='text' placeholder='Target Token' />
+    <button id='confirmSwap' class='glow'>Swap</button>`;
+  document.getElementById('confirmSwap').onclick=()=>simulateFlow('Swapping assets…','Swap complete, balance updated.');
 };
 
-const aiFlow=document.getElementById('aiFlow');
-const nodes=document.querySelectorAll('.node');
-const flowText=document.getElementById('flowText');
-
-function simulateFlow(action,successMsg){
+function simulateFlow(progress,done){
   aiSound.play();
-  aiFlow.classList.add('active');
-  flowText.textContent='Initializing Secure Path...';
-  let i=0;
-  const steps=['User Node','Wallet Interface','Genesis Engine','T-Gen AI Layer','Solana Network'];
+  popup.classList.remove('active');
+  let step=0;
+  const text=["Initializing T-GEN","Analyzing Behavior","Routing RPC","Executing","Finalizing"];
   const interval=setInterval(()=>{
-    if(i<nodes.length){
-      nodes[i].classList.add('active');
-      flowText.textContent=`${action} ${steps[i]}...`;
-      i++;
-    }else{
-      clearInterval(interval);
-      setTimeout(()=>{
-        aiFlow.classList.remove('active');
-        nodes.forEach(n=>n.classList.remove('active'));
-        showSuccess(successMsg);
-      },1500);
-    }
-  },600);
+    if(step<text.length){console.log(text[step]);step++;}
+    else{clearInterval(interval);showSuccess(done);}
+  },700);
 }
-
 function showSuccess(msg){
-  successMessage.textContent=msg;
+  successMsg.textContent=msg;
   successPopup.classList.add('active');
   successSound.play();
   setTimeout(()=>successPopup.classList.remove('active'),3000);
