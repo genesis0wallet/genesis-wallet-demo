@@ -7,19 +7,8 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- LOADING SCREEN -->
-  <div id="loading-screen">
-    <div class="ai-orb">
-      <div class="orb-core"></div>
-      <div class="orb-glow"></div>
-    </div>
-    <h2>T-GEN AI SCANNING ...</h2>
-    <p>Verifying cryptographic layers & threat mesh ...</p>
-    <div class="bubble-flow"><span></span><span></span><span></span><span></span><span></span></div>
-  </div>
-
   <!-- MAIN APP -->
-  <div class="app hidden">
+  <div class="app">
     <div class="wallet-box">
       <div class="logo-area">
         <img src="genesis-logo.png" class="wallet-logo" alt="Genesis Logo">
@@ -32,44 +21,43 @@
       </div>
 
       <!-- Solana -->
-<div class="token" data-token="SOL">
-  <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="Solana">
-  <div><h3>Solana (SOL)</h3><p>18.00 SOL</p></div>
-  <span>$ 4 700 .00</span>
-</div>
+      <div class="token" data-token="SOL">
+        <div><h3>Solana (SOL)</h3><p>18.00 SOL</p></div>
+        <span>$ 4 700 .00</span>
+      </div>
 
-<!-- USDC -->
-<div class="token" data-token="USDC">
-  <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=025" alt="USDC">
-  <div><h3>USD Coin (USDC)</h3><p>4 700 .00</p></div>
-  <span>$ 4 700 .00</span>
-</div>
+      <!-- USDC -->
+      <div class="token" data-token="USDC">
+        <div><h3>USD Coin (USDC)</h3><p>4 700 .00</p></div>
+        <span>$ 4 700 .00</span>
+      </div>
 
-<!-- RAY -->
-<div class="token" data-token="RAY">
-  <img src="https://cryptologos.cc/logos/raydium-ray-logo.svg?v=025" alt="Raydium">
-  <div><h3>Raydium (RAY)</h3><p>3 250 .00</p></div>
-  <span>$ 6 000 .55</span>
-</div>
+      <!-- RAY -->
+      <div class="token" data-token="RAY">
+        <div><h3>Raydium (RAY)</h3><p>3 250 .00</p></div>
+        <span>$ 6 000 .55</span>
+      </div>
 
       </div>
     </div>
 
-    <footer>© 2025 Genesis Wallet • Powered by T-Gen AI</footer>
+    <footer>
+      <p class="footer-disclaimer">⚠️ Demo Environment — This preview simulates the Genesis Wallet powered by T-Gen AI.</p>
+      <p class="footer-disclaimer">Actual functionality, design, and token data may differ in production.</p>
+      <a class="footer-button" href="https://genesis.uwu.ai" target="_blank" rel="noopener noreferrer">Go back to Genesis main site</a>
+      <small>© 2025 Genesis Wallet • Powered by T-Gen AI</small>
+    </footer>
   </div>
 
   <!-- MODAL -->
   <div id="modal" class="hidden">
     <div class="modal-content">
+      <button id="close-modal" class="modal-close" aria-label="Close notification">&#8595;</button>
       <h2 id="modal-title"></h2>
       <div id="modal-body"></div>
       <div id="modal-buttons"></div>
-      <button id="close-modal">Close</button>
     </div>
   </div>
-
-  <audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2560/2560-preview.mp3"></audio>
-  <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/2015/2015-preview.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
