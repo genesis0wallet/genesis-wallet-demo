@@ -1,60 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Genesis Wallet</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app-container fade-in">
+  <!-- AI SCAN SCREEN -->
+  <section id="scan-screen" class="screen active">
+    <div class="center">
+      <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo" />
+      <h1 class="title">GENESIS WALLET</h1>
+      <p class="subtitle">T-GEN AI SCANNING</p>
+      <div class="loader"></div>
+      <p class="processing">Processing...</p>
+    </div>
+  </section>
 
-    <!-- HEADER -->
-    <header class="header">
-      <div class="logo-wrapper neon-glow">
-        <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo">
-      </div>
-      <h1>Genesis Wallet</h1>
+  <!-- MAIN DASHBOARD -->
+  <section id="dashboard" class="screen">
+    <header>
+      <img src="genesis-logo.png" alt="Logo" class="header-logo">
+      <h2>Genesis Wallet</h2>
+      <button class="icon-btn" id="aiBtn">🧠</button>
     </header>
 
-    <!-- BALANCE -->
-    <section class="balance">
-      <h2 class="amount">$7,936.68</h2>
-      <p class="change">+ $1.99 (+0.03%)</p>
-    </section>
-
-    <!-- ACTION BUTTONS -->
-    <div class="action-bar">
-      <button id="receiveBtn" class="btn receive">Receive</button>
-      <button id="sendBtn" class="btn send">Send</button>
+    <div class="balance">
+      <h1>$12,850.75</h1>
+      <p>Portfolio Balance</p>
     </div>
 
-    <!-- STATUS LOG -->
-    <div class="status-log">
-      <p class="ai-status">T-Gen AI Status: Scanning Solana network...</p>
-      <div id="aiBar" class="ai-bar"></div>
-      <div id="simulation" class="simulation"></div>
-    </div>
-
-    <!-- TOKENS -->
-    <div class="token-card slide-up">
-      <h3>Tokens</h3>
-      <div class="token-item">
-        <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL">
+    <div class="token-list">
+      <div class="token">
+        <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL" />
         <div>
-          <h4>Solana</h4>
-          <p>44.4485 SOL</p>
-          <p>$8,039.35</p>
-          <p class="gain">+$495.60</p>
+          <h3>SOL</h3>
+          <p>18.00 SOL</p>
         </div>
+        <span>$4,700.00</span>
+      </div>
+
+      <div class="token">
+        <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=025" alt="USDC" />
+        <div>
+          <h3>USDC</h3>
+          <p>4,700.00</p>
+        </div>
+        <span>$4,700.00</span>
+      </div>
+
+      <div class="token">
+        <img src="https://cryptologos.cc/logos/raydium-ray-logo.svg?v=025" alt="RAY" />
+        <div>
+          <h3>RAY</h3>
+          <p>3,250.00</p>
+        </div>
+        <span>$6,000.55</span>
       </div>
     </div>
 
-    <footer class="footer">
-      <p>© 2025 Genesis Wallet • Powered by T-Gen AI</p>
-    </footer>
+    <div class="actions">
+      <button class="glow">Receive</button>
+      <button class="glow">Send</button>
+      <button class="glow">Swap</button>
+    </div>
+  </section>
 
-  </div>
+  <!-- AI PROTECTION PANEL -->
+  <section id="ai-panel" class="screen">
+    <header>
+      <button class="back-btn" id="backBtn">←</button>
+      <h2>T-Gen AI Protection</h2>
+    </header>
+
+    <div class="toggle-row">
+      <label>T-Gen AI Protection</label>
+      <label class="switch">
+        <input type="checkbox" checked />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="features">
+      <div class="feature">⚡ Real-Time Alerts</div>
+      <div class="feature">🧠 Smart Transaction Scan</div>
+      <div class="feature">🛡️ Adaptive Firewall</div>
+    </div>
+
+    <button class="next-btn glow">Next</button>
+  </section>
 
   <script src="script.js"></script>
 </body>
