@@ -1,18 +1,25 @@
-const loading = document.getElementById("loading-screen");
 const app = document.querySelector(".app");
 const clickSound = document.getElementById("click-sound");
 const successSound = document.getElementById("success-sound");
 
+const playSound = (audio) => {
+  if (!audio) return;
+  try {
+    audio.currentTime = 0;
+    const played = audio.play();
+    if (played && typeof played.then === "function") {
+      played.catch(() => {});
+    }
+  } catch (_) {}
+};
+
 window.addEventListener("load", () => {
-  setTimeout(() => {
-    loading.classList.add("hidden");
-    app.classList.remove("hidden");
-  }, 3000);
+  app.classList.remove("hidden");
 });
 
 document.querySelectorAll(".token").forEach((t) => {
   t.addEventListener("click", () => {
-    clickSound.play();
+    playSound(clickSound);
     openModal(t.dataset.token);
   });
 });
@@ -21,12 +28,33 @@ const modal = document.getElementById("modal");
 const modalTitle = document.getElementById("modal-title");
 const modalBody = document.getElementById("modal-body");
 const modalBtns = document.getElementById("modal-buttons");
-const closeModal = document.getElementById("close-modal");
+const closeModalBtn = document.getElementById("close-modal");
 
-closeModal.addEventListener("click", () => modal.classList.add("hidden"));
+const hideModal = () => {
+  if (modal.classList.contains("hidden")) return;
+  playSound(clickSound);
+  modal.classList.remove("show");
+  const finishHide = (event) => {
+    if (event.target === modal && event.propertyName === "opacity" && !modal.classList.contains("show")) {
+      modal.classList.add("hidden");
+    }
+  };
+  modal.addEventListener("transitionend", finishHide, { once: true });
+  setTimeout(() => {
+    if (!modal.classList.contains("show")) {
+      modal.classList.add("hidden");
+    }
+  }, 450);
+};
+
+closeModalBtn.addEventListener("click", hideModal);
+modal.addEventListener("click", (event) => {
+  if (event.target === modal) {
+    hideModal();
+  }
+});
 
 function openModal(symbol) {
-  modal.classList.remove("hidden");
   modalTitle.textContent = `${symbol} Token`;
   modalBody.innerHTML = `<p>Balance: ${symbol === "SOL" ? "18.00" : symbol === "USDC" ? "4700.00" : "3250.00"} ${symbol}</p>`;
   modalBtns.innerHTML = `
@@ -34,10 +62,12 @@ function openModal(symbol) {
     <button onclick="send('${symbol}')">Send</button>
     <button onclick="swap('${symbol}')">Swap</button>
   `;
+  modal.classList.remove("hidden");
+  requestAnimationFrame(() => modal.classList.add("show"));
 }
 
 function receive(symbol) {
-  clickSound.play();
+  playSound(clickSound);
   modalBody.innerHTML = `
     <p>Receiving Address:</p>
     <code>7xR3Nf2Zg...Hq9pVx</code>
@@ -46,7 +76,7 @@ function receive(symbol) {
 }
 
 function send(symbol) {
-  clickSound.play();
+  playSound(clickSound);
   modalBody.innerHTML = `
     <p>Send ${symbol}</p>
     <input type="text" placeholder="Recipient Address" />
@@ -56,7 +86,7 @@ function send(symbol) {
 }
 
 function swap(symbol) {
-  clickSound.play();
+  playSound(clickSound);
   modalBody.innerHTML = `
     <p>Swap ${symbol}</p>
     <input type="text" placeholder="From Token" />
@@ -67,10 +97,10 @@ function swap(symbol) {
 }
 
 function simulateTx() {
-  clickSound.play();
+  playSound(clickSound);
   modalBody.innerHTML = `<div class="bubble-flow"><span></span><span></span><span></span><span></span><span></span></div><p>T-Gen AI verifying transaction...</p>`;
   setTimeout(() => {
-    successSound.play();
+    playSound(successSound);
     modalBody.innerHTML = `<h3 style="color:cyan;">Transaction Successful ✅</h3>`;
   }, 2500);
 }
