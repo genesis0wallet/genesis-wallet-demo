@@ -7,23 +7,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- AI SCAN SCREEN -->
-  <section id="scan-screen" class="screen active">
+  <!-- SCANNING / LOADING SCREEN -->
+  <div id="scan-screen" class="overlay active">
     <div class="center">
-      <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo" />
-      <h1 class="title">GENESIS WALLET</h1>
-      <p class="subtitle">T-GEN AI SCANNING</p>
-      <div class="loader"></div>
-      <p class="processing">Processing...</p>
+      <div class="logo-aura">
+        <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo" />
+        <div class="aura"></div>
+      </div>
+      <h1 class="scan-title">T-GEN AI SCANNING...</h1>
+      <p class="scan-sub">Processing Secure Transaction Layers...</p>
+      <div class="bubble-container" id="bubbleLoad"></div>
     </div>
-  </section>
+  </div>
 
   <!-- MAIN DASHBOARD -->
-  <section id="dashboard" class="screen">
-    <header>
-      <img src="genesis-logo.png" alt="Logo" class="header-logo">
-      <h2>Genesis Wallet</h2>
-      <button class="icon-btn" id="aiBtn">🧠</button>
+  <div id="dashboard" class="screen">
+    <header class="header">
+      <div class="header-left">
+        <img src="genesis-logo.png" class="header-logo" alt="Genesis Wallet Logo" />
+        <h2>Genesis Wallet</h2>
+      </div>
+      <button id="aiPanelBtn" class="icon-btn">🧠</button>
     </header>
 
     <div class="balance">
@@ -34,62 +38,40 @@
     <div class="token-list">
       <div class="token">
         <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL" />
-        <div>
-          <h3>SOL</h3>
-          <p>18.00 SOL</p>
-        </div>
+        <div><h3>SOL</h3><p>18.00 SOL</p></div>
         <span>$4,700.00</span>
       </div>
-
       <div class="token">
         <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=025" alt="USDC" />
-        <div>
-          <h3>USDC</h3>
-          <p>4,700.00</p>
-        </div>
+        <div><h3>USDC</h3><p>4,700.00</p></div>
         <span>$4,700.00</span>
       </div>
-
       <div class="token">
         <img src="https://cryptologos.cc/logos/raydium-ray-logo.svg?v=025" alt="RAY" />
-        <div>
-          <h3>RAY</h3>
-          <p>3,250.00</p>
-        </div>
+        <div><h3>RAY</h3><p>3,250.00</p></div>
         <span>$6,000.55</span>
       </div>
     </div>
 
     <div class="actions">
-      <button class="glow">Receive</button>
-      <button class="glow">Send</button>
-      <button class="glow">Swap</button>
+      <button class="glow" id="receiveBtn">Receive</button>
+      <button class="glow" id="sendBtn">Send</button>
+      <button class="glow" id="swapBtn">Swap</button>
     </div>
-  </section>
+  </div>
 
-  <!-- AI PROTECTION PANEL -->
-  <section id="ai-panel" class="screen">
-    <header>
-      <button class="back-btn" id="backBtn">←</button>
-      <h2>T-Gen AI Protection</h2>
-    </header>
-
-    <div class="toggle-row">
-      <label>T-Gen AI Protection</label>
-      <label class="switch">
-        <input type="checkbox" checked />
-        <span class="slider"></span>
-      </label>
+  <!-- AI FLOW OVERLAY -->
+  <div id="aiFlow" class="overlay">
+    <div class="architecture">
+      <div class="node">User Node</div>
+      <div class="node">Wallet Interface</div>
+      <div class="node">Genesis Engine</div>
+      <div class="node">T-Gen AI Layer</div>
+      <div class="node">Solana Network</div>
+      <div id="bubbleFlow"></div>
     </div>
-
-    <div class="features">
-      <div class="feature">⚡ Real-Time Alerts</div>
-      <div class="feature">🧠 Smart Transaction Scan</div>
-      <div class="feature">🛡️ Adaptive Firewall</div>
-    </div>
-
-    <button class="next-btn glow">Next</button>
-  </section>
+    <p id="flowText" class="flow-text">Initializing...</p>
+  </div>
 
   <script src="script.js"></script>
 </body>
