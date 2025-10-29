@@ -1,67 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Genesis Wallet</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genesis Wallet</title>
+<style>
+:root {
+  --bg: #050505;
+  --card: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.08);
+  --accent: #00ffa3;
+  --accent-glow: rgba(0,255,163,0.35);
+  --text: #fff;
+  --muted: #aaa;
+  --radius: 16px;
+  --font: "Inter", system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  background: radial-gradient(circle at 50% 0%, #0c0c0c, #000);
+  color: var(--text);
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* === Animations === */
+@keyframes fadeInUp { from {opacity:0; transform:translateY(15px);} to {opacity:1; transform:translateY(0);} }
+@keyframes pulseGlow { 0% {box-shadow:0 0 8px var(--accent-glow);} 50% {box-shadow:0 0 24px var(--accent-glow);} 100% {box-shadow:0 0 8px var(--accent-glow);} }
+@keyframes aiScan { 0% {transform:translateX(-100%);} 100% {transform:translateX(100%);} }
+
+/* === Header === */
+header {
+  text-align: center;
+  margin-top: 2rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+.logo {
+  width: 90px; height: 90px;
+  margin: 0 auto 0.8rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg,#00ffa3,#007f5f);
+  display: flex; align-items: center; justify-content: center;
+  animation: pulseGlow 2s infinite ease-in-out;
+}
+.logo img { width: 65px; height: 65px; }
+h1 { font-size: 1.8rem; }
+
+/* === Tabs === */
+.navbar {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+.nav-btn {
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.nav-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+.nav-btn:hover { background: rgba(255,255,255,0.08); }
+
+/* === Section Container === */
+.section {
+  width: 90%;
+  max-width: 420px;
+  margin-top: 1.5rem;
+  display: none;
+  animation: fadeInUp 0.4s ease;
+}
+.section.active { display: block; }
+
+/* === Dashboard Section === */
+.balance-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+}
+.balance-amount {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.balance-change { color: var(--muted); font-size: 0.9rem; }
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 1.5rem;
+}
+.action-btn {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.action-btn:hover { transform: scale(1.03); background: rgba(255,255,255,0.08); }
+.action-btn.primary {
+  background: var(--accent);
+  color: #002d1e;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* === T-Gen AI Indicator === */
+.ai-status {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  position: relative;
+  overflow: hidden;
+}
+.ai-status::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+  animation: aiScan 2s linear infinite;
+}
+.ai-status span { color: var(--accent); font-weight: 600; }
+
+/* === Tokens Section === */
+.token-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-top: 0.8rem;
+}
+.token-logo {
+  width: 50px; height: 50px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  display: flex; justify-content: center; align-items: center;
+}
+.token-logo img { width: 30px; height: 30px; }
+.token-info h3 { font-size: 1rem; }
+.token-info .gain { color: var(--accent); }
+
+/* === Activity Section === */
+.activity-log {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+.activity-item {
+  display: flex; justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.activity-item:last-child { border-bottom: none; }
+
+/* === Footer === */
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-top: auto;
+  padding: 2rem 0;
+}
+
+/* === Responsive === */
+@media (min-width: 700px) {
+  .actions { grid-template-columns: repeat(4,1fr); }
+}
+</style>
 </head>
-
 <body>
-  <div class="app-container fade-in">
 
-    <!-- HEADER -->
-    <header class="header">
-      <div class="logo-wrapper glow">
-        <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo" />
-      </div>
-      <h1>Genesis Wallet</h1>
-    </header>
-
-    <!-- ACCOUNTS -->
-    <section class="accounts">
-      <h2>Accounts</h2>
-      <div class="account-list">
-        <div class="account-card">Main Account 1</div>
-        <div class="account-card">Main Account 2</div>
-      </div>
-    </section>
-
-    <!-- BALANCE -->
-    <main class="wallet-section">
-      <div class="balance-card">
-        <h3 class="balance-amount">$7,935.40</h3>
-        <p class="balance-change">+$1.99 (+0.03%)</p>
-      </div>
-
-      <!-- ACTION BUTTONS -->
-      <div class="action-bar">
-        <button class="btn">Receive</button>
-        <button class="btn">Send</button>
-        <button class="btn active">Swap</button>
-        <button class="btn">Buy</button>
-      </div>
-
-      <!-- TOKEN CARD -->
-      <div class="token-card slide-up">
-        <h3>Tokens</h3>
-        <div class="token-item">
-          <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL" />
-          <div class="token-info">
-            <h4>Solana</h4>
-            <p>44.4485 SOL</p>
-            <p>$8,039.35</p>
-            <p class="gain">+$495.60</p>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-      <p>© 2025 Genesis Wallet • Powered by T-Gen AI</p>
-    </footer>
-
+<header>
+  <div class="logo">
+    <img src="genesis-logo.png" alt="Logo" />
   </div>
+  <h1>Genesis Wallet</h1>
+</header>
+
+<div class="navbar">
+  <div class="nav-btn active" data-tab="dashboard">Dashboard</div>
+  <div class="nav-btn" data-tab="tokens">Tokens</div>
+  <div class="nav-btn" data-tab="activity">Activity</div>
+</div>
+
+<!-- Dashboard Section -->
+<section id="dashboard" class="section active">
+  <div class="balance-card">
+    <div class="balance-amount" id="balance">$7,935.40</div>
+    <div class="balance-change" id="change">+$1.99 (+0.03%)</div>
+  </div>
+
+  <div class="actions">
+    <div class="action-btn">Receive</div>
+    <div class="action-btn">Send</div>
+    <div class="action-btn primary">Swap</div>
+    <div class="action-btn">Buy</div>
+  </div>
+
+  <div class="ai-status">T-Gen AI Status: <span id="aiText">Monitoring Chain Activity...</span></div>
+</section>
+
+<!-- Tokens Section -->
+<section id="tokens" class="section">
+  <div class="token-card">
+    <div class="token-logo">
+      <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL" />
+    </div>
+    <div class="token-info">
+      <h3>Solana</h3>
+      <p>44.4485 SOL</p>
+      <p>$8,039.35</p>
+      <p class="gain">+$495.60</p>
+    </div>
+  </div>
+</section>
+
+<!-- Activity Section -->
+<section id="activity" class="section">
+  <div class="activity-log">
+    <div class="activity-item"><span>Received 2.0 SOL</span><span>+$300</span></div>
+    <div class="activity-item"><span>Sent 1.2 SOL</span><span>−$180</span></div>
+    <div class="activity-item"><span>AI Scan Alert</span><span style="color:var(--accent)">Safe ✅</span></div>
+  </div>
+</section>
+
+<footer>© 2025 Genesis Wallet • Powered by T-Gen AI</footer>
+
+<script>
+// === Tab Navigation ===
+const tabs = document.querySelectorAll('.nav-btn');
+const sections = document.querySelectorAll('.section');
+
+tabs.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    tabs.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const id = btn.dataset.tab;
+    sections.forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  });
+});
+
+// === Fake AI Status Cycling ===
+const aiPhrases = [
+  "Scanning Solana network...",
+  "Monitoring transactions...",
+  "Running zero-knowledge validation...",
+  "All systems stable ✅",
+  "Predictive defense ready ⚡"
+];
+let i = 0;
+setInterval(()=>{
+  document.getElementById('aiText').textContent = aiPhrases[i % aiPhrases.length];
+  i++;
+}, 3000);
+
+// === Animated Balance Simulation ===
+setInterval(()=>{
+  const bal = document.getElementById('balance');
+  const val = 7935.40 + Math.random()*5 - 2.5;
+  bal.textContent = `$${val.toFixed(2)}`;
+}, 2500);
+</script>
+
 </body>
 </html>
