@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <!-- ===== LOADING SCREEN ===== -->
   <div id="scan-screen" class="overlay active">
     <div class="center">
@@ -35,25 +36,34 @@
     <div class="token-list">
       <div class="token" data-token="SOL">
         <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL" />
-        <div><h3>SOL</h3><p>18.00 SOL</p></div>
+        <div class="token-info">
+          <h3>Solana (SOL)</h3>
+          <p>18.00 SOL</p>
+        </div>
         <span>$4,700.00</span>
       </div>
 
       <div class="token" data-token="USDC">
         <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=025" alt="USDC" />
-        <div><h3>USDC</h3><p>4,700.00</p></div>
+        <div class="token-info">
+          <h3>USD Coin (USDC)</h3>
+          <p>4,700.00</p>
+        </div>
         <span>$4,700.00</span>
       </div>
 
       <div class="token" data-token="RAY">
         <img src="https://cryptologos.cc/logos/raydium-ray-logo.svg?v=025" alt="RAY" />
-        <div><h3>RAY</h3><p>3,250.00</p></div>
+        <div class="token-info">
+          <h3>Raydium (RAY)</h3>
+          <p>3,250.00</p>
+        </div>
         <span>$6,000.55</span>
       </div>
     </div>
   </div>
 
-  <!-- ===== POPUP ===== -->
+  <!-- ===== POPUP (ACTION PANEL) ===== -->
   <div id="tokenPopup" class="popup">
     <div class="popup-content">
       <h2 id="popupTitle">SOL</h2>
@@ -81,9 +91,17 @@
     <p id="flowText" class="flow-text">Initializing...</p>
   </div>
 
+  <!-- ===== SUCCESS POPUP ===== -->
+  <div id="successPopup" class="success-popup">
+    <div class="checkmark"></div>
+    <h3>Transaction Successful!</h3>
+    <p id="successMessage"></p>
+  </div>
+
   <!-- ===== SOUND EFFECTS ===== -->
   <audio id="aiSound" src="https://assets.mixkit.co/sfx/download/mixkit-technology-interface-2577.wav" preload="auto"></audio>
   <audio id="pingSound" src="https://assets.mixkit.co/sfx/download/mixkit-fast-short-click-1116.wav" preload="auto"></audio>
+  <audio id="successSound" src="https://assets.mixkit.co/sfx/download/mixkit-achievement-bell-600.wav" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
