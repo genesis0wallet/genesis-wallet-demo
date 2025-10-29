@@ -59,7 +59,7 @@ body {
 
 /* === APP === */
 .app { padding: 20px; text-align: center; }
-.hidden { display: none; }
+.hidden { display: none !important; }
 
 .wallet-box {
   background: rgba(0,255,255,0.05);
@@ -96,23 +96,41 @@ body {
 
 /* === MODAL === */
 #modal {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.85);
-  display: flex; justify-content: center; align-items: flex-end;
+  position: fixed;
+  inset: 0;
+  padding: 24px;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(18px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+#modal.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 .modal-content {
-  width: 100%; padding: 20px;
-  background: rgba(10,20,30,0.9);
-  border-top: 2px solid cyan;
-  border-radius: 20px 20px 0 0;
-  animation: slideUp .5s ease;
+  position: relative;
+  width: min(420px, 92%);
+  padding: 48px 24px 28px;
+  background: rgba(10,20,30,0.94);
+  border: 1px solid rgba(0,255,255,0.25);
+  border-radius: 24px 24px 18px 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  transform: translateY(24px) scale(0.96);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
 }
-@keyframes slideUp {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+#modal.show .modal-content {
+  transform: translateY(0) scale(1);
+  opacity: 1;
 }
-button {
+button:not(.modal-close) {
   background: linear-gradient(90deg, #00ffff, #0055ff);
   border: none; padding: 10px 20px;
   border-radius: 6px; color: #fff;
@@ -120,11 +138,69 @@ button {
   cursor: pointer;
   transition: 0.3s;
 }
-button:hover { background: linear-gradient(90deg, #0055ff, #00ffff); }
+button:not(.modal-close):hover { background: linear-gradient(90deg, #0055ff, #00ffff); }
+
+.modal-close {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 60%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 255, 255, 0.35);
+  background: rgba(9, 29, 43, 0.95);
+  color: #0ff;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.modal-close:hover {
+  background: rgba(0, 255, 255, 0.2);
+  box-shadow: 0 8px 18px rgba(0, 255, 255, 0.25);
+  transform: translate(-50%, 70%) scale(1.05);
+}
 
 /* === FOOTER === */
 footer {
-  margin-top: 25px;
-  color: #888;
+  margin-top: 28px;
+  color: #a5b0b9;
   font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+}
+.footer-disclaimer {
+  color: #b9c6cf;
+  font-size: 0.78rem;
+  max-width: 480px;
+  line-height: 1.4;
+}
+.footer-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #00ffff, #0055ff);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 8px 20px rgba(0, 125, 255, 0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+.footer-button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(90deg, #0055ff, #00ffff);
+  box-shadow: 0 12px 24px rgba(0, 160, 255, 0.3);
+}
+footer small {
+  color: #78838d;
+  font-size: 0.7rem;
 }
