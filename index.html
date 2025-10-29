@@ -3,71 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Genesis Wallet</title>
+  <title>Genesis Wallet V3</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ===== LOADING SCREEN ===== -->
+  <!-- PARTICLE BACKGROUND -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- LOADING SCREEN -->
   <div id="scan-screen" class="overlay active">
     <div class="center">
-      <div class="logo-circle">
+      <div class="logo-orb">
         <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo" />
-        <div class="aura"></div>
+        <div class="aura-ring"></div>
       </div>
-      <h1 class="scan-title">T-GEN AI SCANNING...</h1>
-      <p class="scan-sub">Processing Secure Transaction Layers...</p>
-      <div class="bubble-container" id="bubbleLoad"></div>
+      <h1 class="scan-title">T-GEN AI SCANNING ...</h1>
+      <p class="scan-sub">Verifying cryptographic layers & threat mesh ...</p>
     </div>
   </div>
 
-  <!-- ===== MAIN DASHBOARD ===== -->
-  <div id="dashboard" class="screen">
-    <header class="header center">
+  <!-- MAIN WALLET -->
+  <div id="dashboard" class="screen hidden">
+    <header class="header center glass">
       <img src="genesis-logo.png" class="header-logo" alt="Genesis Wallet Logo" />
-      <h2>Genesis Wallet</h2>
+      <h2>GENESIS WALLET</h2>
     </header>
 
-    <div class="balance">
-      <h1>$12,850.75</h1>
+    <section class="balance glass">
+      <h1>$ 12 850 .75</h1>
       <p>Portfolio Balance</p>
-    </div>
+    </section>
 
-    <div class="token-list">
-      <div class="token" data-token="SOL">
-        <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL" />
-        <div class="token-info">
+    <section class="token-list">
+      <div class="token glass" data-token="SOL">
+        <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" />
+        <div>
           <h3>Solana (SOL)</h3>
           <p>18.00 SOL</p>
         </div>
-        <span>$4,700.00</span>
+        <span>$ 4 700 .00</span>
       </div>
-
-      <div class="token" data-token="USDC">
-        <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=025" alt="USDC" />
-        <div class="token-info">
+      <div class="token glass" data-token="USDC">
+        <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=025" />
+        <div>
           <h3>USD Coin (USDC)</h3>
-          <p>4,700.00</p>
+          <p>4 700 .00</p>
         </div>
-        <span>$4,700.00</span>
+        <span>$ 4 700 .00</span>
       </div>
-
-      <div class="token" data-token="RAY">
-        <img src="https://cryptologos.cc/logos/raydium-ray-logo.svg?v=025" alt="RAY" />
-        <div class="token-info">
+      <div class="token glass" data-token="RAY">
+        <img src="https://cryptologos.cc/logos/raydium-ray-logo.svg?v=025" />
+        <div>
           <h3>Raydium (RAY)</h3>
-          <p>3,250.00</p>
+          <p>3 250 .00</p>
         </div>
-        <span>$6,000.55</span>
+        <span>$ 6 000 .55</span>
       </div>
-    </div>
+    </section>
   </div>
 
-  <!-- ===== POPUP (ACTION PANEL) ===== -->
-  <div id="tokenPopup" class="popup">
-    <div class="popup-content">
-      <h2 id="popupTitle">SOL</h2>
-      <p id="popupAmount">Balance: 0.00</p>
+  <!-- POPUP -->
+  <div id="tokenPopup" class="popup glass">
+    <div class="popup-inner">
+      <h2 id="popupTitle">TOKEN</h2>
+      <p id="popupAmount">Balance: 0 .00</p>
       <div class="popup-actions">
         <button id="receiveAction" class="glow">Receive</button>
         <button id="sendAction" class="glow">Send</button>
@@ -78,30 +78,17 @@
     </div>
   </div>
 
-  <!-- ===== AI FLOW OVERLAY ===== -->
-  <div id="aiFlow" class="overlay">
-    <div class="architecture">
-      <div class="node">User Node</div>
-      <div class="node">Wallet Interface</div>
-      <div class="node">Genesis Engine</div>
-      <div class="node">T-Gen AI Layer</div>
-      <div class="node">Solana Network</div>
-      <div id="bubbleFlow"></div>
-    </div>
-    <p id="flowText" class="flow-text">Initializing...</p>
-  </div>
-
-  <!-- ===== SUCCESS POPUP ===== -->
-  <div id="successPopup" class="success-popup">
+  <!-- SUCCESS POPUP -->
+  <div id="successPopup" class="success glass">
     <div class="checkmark"></div>
-    <h3>Transaction Successful!</h3>
+    <h3>Transaction Successful</h3>
     <p id="successMessage"></p>
   </div>
 
-  <!-- ===== SOUND EFFECTS ===== -->
-  <audio id="aiSound" src="https://assets.mixkit.co/sfx/download/mixkit-technology-interface-2577.wav" preload="auto"></audio>
-  <audio id="pingSound" src="https://assets.mixkit.co/sfx/download/mixkit-fast-short-click-1116.wav" preload="auto"></audio>
-  <audio id="successSound" src="https://assets.mixkit.co/sfx/download/mixkit-achievement-bell-600.wav" preload="auto"></audio>
+  <!-- AUDIO -->
+  <audio id="aiSound" src="https://assets.mixkit.co/sfx/download/mixkit-technology-interface-2577.wav"></audio>
+  <audio id="pingSound" src="https://assets.mixkit.co/sfx/download/mixkit-fast-short-click-1116.wav"></audio>
+  <audio id="successSound" src="https://assets.mixkit.co/sfx/download/mixkit-achievement-bell-600.wav"></audio>
 
   <script src="script.js"></script>
 </body>
