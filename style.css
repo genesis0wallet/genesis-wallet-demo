@@ -1,67 +1,62 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-* {margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
-body{background:radial-gradient(circle at center,#020202 60%,#000 100%);color:#fff;overflow-x:hidden;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+body{overflow:hidden;background:#000;color:#fff;}
 
-/* ===== LAYOUT ===== */
-.center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
-.overlay{position:fixed;inset:0;display:none;justify-content:center;align-items:center;flex-direction:column;background:rgba(0,0,0,.96);z-index:100;}
-.overlay.active{display:flex;}
-.header.center{padding:15px 0;flex-direction:column;}
-.header-logo{width:50px;margin-bottom:10px;}
+/* ===== GLASS EFFECT ===== */
+.glass{
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:16px;
+  box-shadow:0 0 25px rgba(0,255,179,0.15);
+}
 
-/* ===== AURA LOGO ===== */
-.logo-circle{position:relative;width:150px;height:150px;border-radius:50%;}
-.logo{width:80px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2;}
-.aura{position:absolute;top:50%;left:50%;width:200px;height:200px;border-radius:50%;
-background:conic-gradient(from 0deg,#00e0ff,#00ffb3,#0066ff,#00e0ff);
-filter:blur(35px);transform:translate(-50%,-50%);animation:auraPulse 3s ease-in-out infinite;}
-@keyframes auraPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.25);}}
+/* ===== HEADER ===== */
+.header{padding:20px 0;text-align:center;}
+.header-logo{width:60px;margin-bottom:8px;}
+.balance{text-align:center;margin:15px auto;width:90%;}
+.token-list{width:90%;margin:20px auto;display:flex;flex-direction:column;gap:12px;}
+.token{display:flex;align-items:center;justify-content:space-between;padding:15px;cursor:pointer;transition:.4s;}
+.token:hover{box-shadow:0 0 25px #00ffb3;}
+.token img{width:32px;margin-right:10px;}
+.token div{flex:1;margin-left:10px;}
+.hidden{display:none;}
 
-/* ===== TOKENS ===== */
-.token-list{margin:20px auto;width:90%;max-width:450px;}
-.token{display:flex;align-items:center;justify-content:space-between;
-background:rgba(255,255,255,0.05);padding:15px;border-radius:12px;margin-bottom:12px;
-cursor:pointer;transition:.3s;}
-.token:hover{background:rgba(0,255,179,0.1);}
-.token img{width:35px;margin-right:10px;}
-.token-info{flex:1;margin-left:10px;}
+/* ===== LOGO AURA ===== */
+.logo-orb{position:relative;width:160px;height:160px;border-radius:50%;overflow:hidden;}
+.logo-orb .logo{width:90px;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);}
+.aura-ring{
+  position:absolute;top:50%;left:50%;
+  width:200px;height:200px;border-radius:50%;
+  background:conic-gradient(from 0deg,#00ffb3,#00e0ff,#0066ff,#00ffb3);
+  transform:translate(-50%,-50%);filter:blur(30px);
+  animation:aura 4s ease-in-out infinite;
+}
+@keyframes aura{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1);}
+50%{opacity:1;transform:translate(-50%,-50%) scale(1.3);}}
 
 /* ===== POPUP ===== */
-.popup{position:fixed;bottom:-100%;left:0;width:100%;background:rgba(10,15,25,.95);
-border-radius:25px 25px 0 0;transition:bottom .5s ease;padding:25px;z-index:200;}
+.popup{position:fixed;bottom:-100%;left:0;width:100%;padding:20px;transition:.5s;z-index:100;}
 .popup.active{bottom:0;}
-.popup-actions{display:flex;justify-content:space-around;margin:15px 0;}
+.popup-actions{display:flex;justify-content:space-around;margin:10px 0;}
 .glow{background:linear-gradient(90deg,#00e0ff,#00ffb3);color:#000;border:none;
-padding:10px 20px;border-radius:25px;cursor:pointer;box-shadow:0 0 15px #00e0ff;}
-.glow:hover{box-shadow:0 0 25px #00ffb3;}
-.closePopup{background:none;border:1px solid #00e0ff;color:#00e0ff;padding:5px 15px;border-radius:10px;margin-top:10px;}
+padding:10px 18px;border-radius:20px;cursor:pointer;box-shadow:0 0 10px #00ffb3;transition:.3s;}
+.glow:hover{box-shadow:0 0 20px #00ffb3;}
+.closePopup{background:none;border:1px solid #00e0ff;color:#00e0ff;padding:6px 14px;border-radius:10px;margin-top:10px;}
 
-/* ===== AI FLOW ===== */
-.architecture{display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;width:90%;max-width:480px;gap:8px;}
-.node{flex:1 1 45%;text-align:center;background:rgba(255,255,255,.05);padding:12px;border-radius:10px;transition:.3s;}
-.node.active{box-shadow:0 0 20px #00ffb3;background:rgba(0,255,179,.1);}
-.flow-text{margin-top:20px;color:#00e0ff;font-size:.9em;}
-
-/* ===== SUCCESS POPUP ===== */
-.success-popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
-background:rgba(10,25,20,.95);padding:25px 30px;border-radius:15px;text-align:center;
-box-shadow:0 0 30px #00ffb3;z-index:300;transition:transform .4s ease;}
-.success-popup.active{transform:translate(-50%,-50%) scale(1);}
-.checkmark{width:60px;height:60px;margin:0 auto 10px;border-radius:50%;
-border:4px solid #00ffb3;position:relative;}
-.checkmark::after{content:"";position:absolute;left:16px;top:22px;width:18px;height:32px;
+/* ===== SUCCESS ===== */
+.success{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
+padding:30px;text-align:center;z-index:200;transition:.4s;}
+.success.active{transform:translate(-50%,-50%) scale(1);}
+.checkmark{width:60px;height:60px;border:4px solid #00ffb3;border-radius:50%;margin:0 auto 10px;position:relative;}
+.checkmark::after{content:"";position:absolute;left:17px;top:22px;width:18px;height:32px;
 border-right:4px solid #00ffb3;border-bottom:4px solid #00ffb3;transform:rotate(45deg);}
+
+/* ===== PARTICLES ===== */
+canvas#particleCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 
 /* ===== INPUT / QR ===== */
 input[type="text"],input[type="number"]{width:90%;padding:8px;margin:8px 0;
-background:rgba(255,255,255,.1);border:none;border-radius:8px;text-align:center;
-color:#00ffb3;font-size:1em;}
-.qr{width:100px;height:100px;background:radial-gradient(circle,#00ffb3,#0066ff);
-margin:15px auto;border-radius:10px;}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:480px){
-  .token img{width:28px;}
-  .glow{padding:8px 16px;}
-  .popup{padding:18px;}
-}
+background:rgba(255,255,255,0.08);border:none;border-radius:8px;color:#00ffb3;text-align:center;}
+.qr{width:120px;height:120px;background:radial-gradient(circle,#00ffb3,#0066ff);
+border-radius:10px;margin:15px auto;}
