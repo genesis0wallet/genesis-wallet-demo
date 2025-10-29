@@ -6,13 +6,19 @@
   <title>Genesis Wallet</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <div class="app-container">
+  <div class="app-container fade-in">
+
+    <!-- HEADER -->
     <header class="header">
-      <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo" />
+      <div class="logo-wrapper glow">
+        <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo" />
+      </div>
       <h1>Genesis Wallet</h1>
     </header>
 
+    <!-- ACCOUNTS -->
     <section class="accounts">
       <h2>Accounts</h2>
       <div class="account-list">
@@ -21,24 +27,27 @@
       </div>
     </section>
 
+    <!-- BALANCE -->
     <main class="wallet-section">
       <div class="balance-card">
         <h3 class="balance-amount">$7,935.40</h3>
         <p class="balance-change">+$1.99 (+0.03%)</p>
       </div>
 
+      <!-- ACTION BUTTONS -->
       <div class="action-bar">
-        <button>Receive</button>
-        <button>Send</button>
-        <button>Swap</button>
-        <button>Buy</button>
+        <button class="btn">Receive</button>
+        <button class="btn">Send</button>
+        <button class="btn active">Swap</button>
+        <button class="btn">Buy</button>
       </div>
 
-      <div class="token-card">
+      <!-- TOKEN CARD -->
+      <div class="token-card slide-up">
         <h3>Tokens</h3>
         <div class="token-item">
           <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL" />
-          <div>
+          <div class="token-info">
             <h4>Solana</h4>
             <p>44.4485 SOL</p>
             <p>$8,039.35</p>
@@ -48,9 +57,11 @@
       </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer">
       <p>© 2025 Genesis Wallet • Powered by T-Gen AI</p>
     </footer>
+
   </div>
 </body>
 </html>
