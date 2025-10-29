@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- SCANNING / LOADING SCREEN -->
+  <!-- ===== LOADING SCREEN ===== -->
   <div id="scan-screen" class="overlay active">
     <div class="center">
-      <div class="logo-aura">
+      <div class="logo-circle">
         <img src="genesis-logo.png" alt="Genesis Wallet Logo" class="logo" />
         <div class="aura"></div>
       </div>
@@ -20,14 +20,11 @@
     </div>
   </div>
 
-  <!-- MAIN DASHBOARD -->
+  <!-- ===== MAIN DASHBOARD ===== -->
   <div id="dashboard" class="screen">
-    <header class="header">
-      <div class="header-left">
-        <img src="genesis-logo.png" class="header-logo" alt="Genesis Wallet Logo" />
-        <h2>Genesis Wallet</h2>
-      </div>
-      <button id="aiPanelBtn" class="icon-btn">🧠</button>
+    <header class="header center">
+      <img src="genesis-logo.png" class="header-logo" alt="Genesis Wallet Logo" />
+      <h2>Genesis Wallet</h2>
     </header>
 
     <div class="balance">
@@ -36,31 +33,42 @@
     </div>
 
     <div class="token-list">
-      <div class="token">
+      <div class="token" data-token="SOL">
         <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=025" alt="SOL" />
         <div><h3>SOL</h3><p>18.00 SOL</p></div>
         <span>$4,700.00</span>
       </div>
-      <div class="token">
+
+      <div class="token" data-token="USDC">
         <img src="https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=025" alt="USDC" />
         <div><h3>USDC</h3><p>4,700.00</p></div>
         <span>$4,700.00</span>
       </div>
-      <div class="token">
+
+      <div class="token" data-token="RAY">
         <img src="https://cryptologos.cc/logos/raydium-ray-logo.svg?v=025" alt="RAY" />
         <div><h3>RAY</h3><p>3,250.00</p></div>
         <span>$6,000.55</span>
       </div>
     </div>
+  </div>
 
-    <div class="actions">
-      <button class="glow" id="receiveBtn">Receive</button>
-      <button class="glow" id="sendBtn">Send</button>
-      <button class="glow" id="swapBtn">Swap</button>
+  <!-- ===== POPUP ===== -->
+  <div id="tokenPopup" class="popup">
+    <div class="popup-content">
+      <h2 id="popupTitle">SOL</h2>
+      <p id="popupAmount">Balance: 0.00</p>
+      <div class="popup-actions">
+        <button id="receiveAction" class="glow">Receive</button>
+        <button id="sendAction" class="glow">Send</button>
+        <button id="swapAction" class="glow">Swap</button>
+      </div>
+      <div id="popupInner"></div>
+      <button class="closePopup">Close</button>
     </div>
   </div>
 
-  <!-- AI FLOW OVERLAY -->
+  <!-- ===== AI FLOW OVERLAY ===== -->
   <div id="aiFlow" class="overlay">
     <div class="architecture">
       <div class="node">User Node</div>
@@ -72,6 +80,10 @@
     </div>
     <p id="flowText" class="flow-text">Initializing...</p>
   </div>
+
+  <!-- ===== SOUND EFFECTS ===== -->
+  <audio id="aiSound" src="https://assets.mixkit.co/sfx/download/mixkit-technology-interface-2577.wav" preload="auto"></audio>
+  <audio id="pingSound" src="https://assets.mixkit.co/sfx/download/mixkit-fast-short-click-1116.wav" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
