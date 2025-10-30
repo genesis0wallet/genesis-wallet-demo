@@ -3,42 +3,80 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Genesis Wallet - Demo Wallet V1</title>
+  <title>Genesis Wallet Demo V1.0</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- MAIN APP -->
   <div class="app">
-    <div class="wallet-box">
-      <div class="logo-area">
-        <img src="genesis-logo.png" class="wallet-logo" alt="Genesis Logo">
-        <h1>GENESIS WALLET</h1>
+    <div class="app-shell">
+      <header class="app-header">
+        <div class="brand">
+          <img src="genesis-logo.png" alt="Genesis Wallet Logo">
+          <div>
+            <p class="brand-subtitle">Genesis Wallet</p>
+            <h1 class="brand-title">T-GEN AI</h1>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" id="settings-btn" aria-label="Open settings">&#9881;</button>
+          <button class="profile-btn" id="profile-btn" aria-label="Open profiles">
+            <span class="profile-initial">M</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="quick-actions">
+        <button class="pill-btn" data-action="receive">Receive</button>
+        <button class="pill-btn" data-action="send">Send</button>
+        <button class="pill-btn" data-action="swap">Swap</button>
       </div>
 
-      <div class="balance-card">
-        <h2>$ <span id="balance">12 850 .75</span></h2>
-        <p>Portfolio Balance</p>
-      </div>
-
-      <!-- Solana -->
-      <div class="token" data-token="SOL">
-        <div><h3>Solana (SOL)</h3><p>18.00 SOL</p></div>
-        <span>$ 4 700 .00</span>
-      </div>
-
-      <!-- USDC -->
-      <div class="token" data-token="USDC">
-        <div><h3>USD Coin (USDC)</h3><p>4 700 .00</p></div>
-        <span>$ 4 700 .00</span>
-      </div>
-
-      <!-- RAY -->
-      <div class="token" data-token="RAY">
-        <div><h3>Raydium (RAY)</h3><p>3 250 .00</p></div>
-        <span>$ 6 000 .55</span>
-      </div>
-
-      </div>
+      <section class="wallet-card">
+        <p class="wallet-card__label">Portfolio Balance</p>
+        <p class="wallet-card__balance">$12,850.75</p>
+        <ul class="token-list">
+          <li class="token" data-token="SOL">
+            <div class="token-info">
+              <span class="token-icon">S</span>
+              <div>
+                <h3>Solana</h3>
+                <p>18.00 SOL</p>
+              </div>
+            </div>
+            <div class="token-values">
+              <span class="token-primary">$ 4,700.00</span>
+              <span class="token-secondary">$ 4,700.00</span>
+            </div>
+          </li>
+          <li class="token" data-token="USDC">
+            <div class="token-info">
+              <span class="token-icon">U</span>
+              <div>
+                <h3>USD Coin</h3>
+                <p>4,700.00 USDC</p>
+              </div>
+            </div>
+            <div class="token-values">
+              <span class="token-primary">$ 4,700.00</span>
+              <span class="token-secondary">$ 4,700.00</span>
+            </div>
+          </li>
+          <li class="token" data-token="RAY">
+            <div class="token-info">
+              <span class="token-icon">R</span>
+              <div>
+                <h3>Raydium</h3>
+                <p>3,250.00 RAY</p>
+              </div>
+            </div>
+            <div class="token-values">
+              <span class="token-primary">$ 6,000.55</span>
+              <span class="token-secondary">$ 6,000.55</span>
+            </div>
+          </li>
+        </ul>
+      </section>
     </div>
 
     <footer>
@@ -52,12 +90,104 @@
   <!-- MODAL -->
   <div id="modal" class="hidden">
     <div class="modal-content">
-      <button id="close-modal" class="modal-close" aria-label="Close notification">&#8595;</button>
       <h2 id="modal-title"></h2>
       <div id="modal-body"></div>
       <div id="modal-buttons"></div>
     </div>
   </div>
+
+  <div id="profile-menu" class="hidden">
+    <div class="profile-backdrop"></div>
+    <aside class="profile-drawer">
+      <header class="profile-drawer__header">
+        <div>
+          <p class="profile-drawer__title">Profiles</p>
+          <p class="profile-drawer__subtitle">Switch or add new wallet identities</p>
+        </div>
+        <button class="profile-close" id="close-profile" aria-label="Close profiles">&times;</button>
+      </header>
+      <ul class="profile-list">
+        <li class="profile-item active">
+          <span class="avatar gradient-a">M</span>
+          <div>
+            <p class="name">Main Mac</p>
+            <p class="detail">Primary device</p>
+          </div>
+        </li>
+        <li class="profile-item">
+          <span class="avatar gradient-b">V</span>
+          <div>
+            <p class="name">Validator Vault</p>
+            <p class="detail">Cold storage</p>
+          </div>
+        </li>
+        <li class="profile-item">
+          <span class="avatar gradient-c">T</span>
+          <div>
+            <p class="name">Trading Pod</p>
+            <p class="detail">High-frequency</p>
+          </div>
+        </li>
+      </ul>
+      <button class="profile-add">
+        <span>+</span>
+        <p>Add new profile</p>
+      </button>
+    </aside>
+  </div>
+
+  <div id="loading-overlay" class="hidden">
+    <div class="loading-container">
+      <div class="scan-card">
+        <div class="scan-indicator">
+          <div class="scan-ring outer"></div>
+          <div class="scan-ring inner"></div>
+          <div class="scan-core"></div>
+        </div>
+        <p class="scan-status">T-GEN AI SCANNING</p>
+        <p class="loading-hint">Processing secure transaction...</p>
+      </div>
+    </div>
+  </div>
+
+  <template id="settings-template">
+    <div class="settings-card">
+      <header>
+        <h2>T-Gen AI Protection</h2>
+        <label class="toggle">
+          <input type="checkbox" checked />
+          <span class="toggle-slider"></span>
+        </label>
+      </header>
+      <ul class="protection-list">
+        <li>
+          <span class="bullet">&#9650;</span>
+          <div>
+            <p class="title">Real-Time Alerts</p>
+            <p class="subtitle">Instant anomaly detection</p>
+          </div>
+        </li>
+        <li>
+          <span class="bullet">&#9680;</span>
+          <div>
+            <p class="title">Smart Transaction Scan</p>
+            <p class="subtitle">AI-assisted fraud guard</p>
+          </div>
+        </li>
+        <li>
+          <span class="bullet">&#9650;</span>
+          <div>
+            <p class="title">Adaptive Firewall</p>
+            <p class="subtitle">Dynamic network hardening</p>
+          </div>
+        </li>
+      </ul>
+      <button class="cta-btn">Next</button>
+    </div>
+  </template>
+
+  <audio id="click-sound" src="https://assets.mixkit.co/sfx/download/mixkit-technology-interface-click-1126.wav" preload="auto"></audio>
+  <audio id="success-sound" src="https://assets.mixkit.co/sfx/download/mixkit-retro-arcade-success-2020.wav" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
