@@ -119,6 +119,18 @@ const openSettings = () => {
   modalBody.innerHTML = "";
   modalBody.appendChild(fragment);
   modalBtns.innerHTML = "";
+  const saveBtn = modalBody.querySelector("#save-settings-btn");
+  const feedback = modalBody.querySelector(".settings-feedback");
+  if (feedback) {
+    feedback.classList.add("hidden");
+  }
+  saveBtn?.addEventListener("click", () => {
+    playSound(successSound);
+    if (feedback) {
+      feedback.textContent = "Settings saved.";
+      feedback.classList.remove("hidden");
+    }
+  });
   modal.classList.remove("hidden");
   requestAnimationFrame(() => modal.classList.add("show"));
 };
