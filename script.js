@@ -130,6 +130,9 @@ const openSettings = () => {
       feedback.textContent = "Settings saved.";
       feedback.classList.remove("hidden");
     }
+    setTimeout(() => {
+      hideModal();
+    }, 900);
   });
   modal.classList.remove("hidden");
   requestAnimationFrame(() => modal.classList.add("show"));
