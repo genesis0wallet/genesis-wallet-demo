@@ -8,6 +8,22 @@ const profileBtn = document.getElementById("profile-btn");
 const profileMenu = document.getElementById("profile-menu");
 const closeProfileBtn = document.getElementById("close-profile");
 
+const tokenBalances = {
+  SOL: { amount: 18.0, fiatUSD: 4700.0 },
+  USDC: { amount: 4700.0, fiatUSD: 4700.0 },
+  RAY: { amount: 3250.0, fiatUSD: 6000.55 },
+};
+
+const formatCurrency = (value) =>
+  Number.isFinite(value)
+    ? `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+    : "$0.00";
+
+const sanitizeNumber = (value) => {
+  if (!value || value === "." || value === "-") return 0;
+  return Number.parseFloat(value);
+};
+
 const playSound = (audio) => {
   if (!audio) return;
   try {
@@ -101,8 +117,18 @@ const hideLoading = () => {
 };
 
 function openModal(symbol) {
+  const info = tokenBalances[symbol] || { amount: 0, fiatUSD: 0 };
   modalTitle.textContent = `${symbol} Token`;
-  modalBody.innerHTML = `<p>Balance: ${symbol === "SOL" ? "18.00" : symbol === "USDC" ? "4700.00" : "3250.00"} ${symbol}</p>`;
+  modalBody.innerHTML = `
+    <div class="token-preview">
+      <div>
+        <p class="token-preview__label">Available Balance</p>
+        <h3 class="token-preview__value">${info.amount.toLocaleString()} ${symbol}</h3>
+        <p class="token-preview__fiat">${formatCurrency(info.fiatUSD)}</p>
+      </div>
+      <p class="token-preview__hint">Choose an action below to continue.</p>
+    </div>
+  `;
   modalBtns.innerHTML = `
     <button onclick="receive('${symbol}')">Receive</button>
     <button onclick="send('${symbol}')">Send</button>
@@ -132,7 +158,7 @@ const openSettings = () => {
     }
     setTimeout(() => {
       hideModal();
-    }, 900);
+    }, 2000);
   });
   modal.classList.remove("hidden");
   requestAnimationFrame(() => modal.classList.add("show"));
@@ -226,23 +252,191 @@ function receive(symbol) {
 
 function send(symbol) {
   playSound(clickSound);
+  const info = tokenBalances[symbol] || { amount: 0, fiatUSD: 0 };
+  const price = info.amount ? info.fiatUSD / info.amount : 0;
   modalBody.innerHTML = `
-    <p>Send ${symbol}</p>
-    <input type="text" placeholder="Recipient Address" />
-    <input type="number" placeholder="Amount" />
-    <button onclick="simulateTx()">Confirm Send</button>
+    <div class="flow-card send-flow">
+      <section class="flow-section">
+        <label class="flow-label">To</label>
+        <div class="flow-recipient">
+          <div>
+            <p class="flow-recipient__name">Main Acc ${symbol}</p>
+            <p class="flow-recipient__address">9bgP...CjDt</p>
+          </div>
+          <button class="flow-pill">Address Book</button>
+        </div>
+      </section>
+
+      <section class="flow-amount">
+        <p class="flow-label">Enter Amount</p>
+        <div class="flow-amount-display">
+          <input class="flow-amount-input" type="text" inputmode="decimal" pattern="[0-9.]*" data-flow-input="amount" value="0" />
+          <span class="flow-asset">${symbol}</span>
+        </div>
+        <p class="flow-fiat" data-flow-fiat>~$0.00</p>
+      </section>
+
+      <div class="flow-availability">
+        <div>
+          <p class="flow-availability__label">Available to send</p>
+          <p class="flow-availability__value">${info.amount.toLocaleString()} ${symbol}</p>
+        </div>
+        <button class="flow-pill" data-flow-max>Max</button>
+      </div>
+
+      <button class="flow-primary" onclick="simulateTx()">Send Now</button>
+    </div>
   `;
+  modalBtns.innerHTML = "";
+  initializeFlowControls({ container: modalBody, price, balance: info.amount });
 }
 
 function swap(symbol) {
   playSound(clickSound);
-  modalBody.innerHTML = `
-    <p>Swap ${symbol}</p>
-    <input type="text" placeholder="From Token" />
-    <input type="text" placeholder="To Token" />
-    <input type="number" placeholder="Amount" />
-    <button onclick="simulateTx()">Confirm Swap</button>
-  `;
+  const payToken = symbol;
+  const receiveToken = symbol === "USDC" ? "SOL" : "USDC";
+
+  const renderSwap = ({ paySym, receiveSym }) => {
+    const payInfo = tokenBalances[paySym] || { amount: 0, fiatUSD: 0 };
+    const receiveInfo = tokenBalances[receiveSym] || { amount: 0, fiatUSD: 0 };
+    const payPrice = payInfo.amount ? payInfo.fiatUSD / payInfo.amount : 0;
+    const receivePrice = receiveInfo.amount ? receiveInfo.fiatUSD / receiveInfo.amount : 0;
+
+    modalBody.innerHTML = `
+      <div class="flow-card swap-flow">
+        <section class="swap-panel">
+          <p class="flow-label">You Pay</p>
+          <div class="swap-token">
+            <span class="swap-token__chip">${paySym}</span>
+            <span class="swap-balance">${payInfo.amount.toLocaleString()} ${paySym}</span>
+          </div>
+          <div class="flow-amount-display">
+            <input class="flow-amount-input" type="text" inputmode="decimal" pattern="[0-9.]*" data-flow-input="pay" value="0" />
+            <span class="flow-asset">${paySym}</span>
+          </div>
+          <p class="flow-fiat" data-flow-fiat>~$0.00</p>
+        </section>
+
+        <button class="swap-toggle" data-flow-swap aria-label="Switch tokens">&#8645;</button>
+
+        <section class="swap-panel">
+          <p class="flow-label">You Receive</p>
+          <div class="swap-token">
+            <span class="swap-token__chip alt">${receiveSym}</span>
+            <span class="swap-balance" data-flow-receive-balance>${receiveInfo.amount ? receiveInfo.amount.toLocaleString() : "0"} ${receiveSym}</span>
+          </div>
+          <div class="flow-amount-display">
+            <input class="flow-amount-input" type="text" inputmode="decimal" pattern="[0-9.]*" data-flow-input="receive" value="0" readonly />
+            <span class="flow-asset">${receiveSym}</span>
+          </div>
+        </section>
+
+        <div class="flow-shortcuts">
+          <button data-flow-percent="0.25">25%</button>
+          <button data-flow-percent="0.5">50%</button>
+          <button data-flow-percent="1">Max</button>
+        </div>
+
+        <button class="flow-primary" onclick="simulateTx()">Swap Now</button>
+      </div>
+    `;
+    modalBtns.innerHTML = "";
+
+    initializeFlowControls({
+      container: modalBody,
+      price: payPrice,
+      balance: payInfo.amount,
+      receivePrice,
+      receiveInput: true,
+      onSwap: () => renderSwap({ paySym: receiveSym, receiveSym: paySym })
+    });
+  };
+
+  renderSwap({ paySym: payToken, receiveSym: receiveToken });
+}
+
+function initializeFlowControls({ container, price, balance, receivePrice, receiveInput, onSwap }) {
+  const closeBtn = container.querySelector("[data-flow-close]");
+  closeBtn?.addEventListener("click", hideModal);
+  const nextBtn = container.querySelector("[data-flow-next]");
+  nextBtn?.addEventListener("click", () => playSound(clickSound));
+  const swapBtn = container.querySelector("[data-flow-swap]");
+  swapBtn?.addEventListener("click", () => {
+    playSound(clickSound);
+    onSwap?.();
+  });
+
+  const amountInput =
+    container.querySelector('[data-flow-input="amount"]') || container.querySelector('[data-flow-input="pay"]');
+  const receiveInputField = receiveInput ? container.querySelector('[data-flow-input="receive"]') : null;
+  const fiatDisplay = container.querySelector("[data-flow-fiat]");
+
+  const updateFiat = () => {
+    if (!fiatDisplay || !amountInput) return;
+    const value = sanitizeNumber(amountInput.value);
+    const estimated = value * (price || 0);
+    fiatDisplay.textContent = `~${formatCurrency(estimated)}`;
+  };
+
+  const updateReceive = () => {
+    if (!receiveInputField || !amountInput) return;
+    const value = sanitizeNumber(amountInput.value);
+    const receiveValue = receivePrice ? (value * (price || 0)) / receivePrice : 0;
+    receiveInputField.value = receiveValue ? receiveValue.toFixed(4).replace(/\.?0+$/, "") : "0";
+  };
+
+  const normalizeInput = () => {
+    if (!amountInput) return;
+    let input = amountInput.value.replace(/[^\d.]/g, "");
+    if (input.startsWith(".")) {
+      input = `0${input}`;
+    }
+    const parts = input.split(".");
+    if (parts.length > 2) {
+      input = `${parts.shift()}.${parts.join("")}`;
+    }
+    if (input === "") input = "0";
+    if (input.length > 18) {
+      input = input.slice(0, 18);
+    }
+    amountInput.value = input.replace(/^0+(?!\.)/, "") || "0";
+    updateFiat();
+    updateReceive();
+  };
+
+  amountInput?.addEventListener("input", normalizeInput);
+  amountInput?.addEventListener("blur", () => {
+    if (!amountInput) return;
+    if (amountInput.value === "" || amountInput.value === ".") {
+      amountInput.value = "0";
+      updateFiat();
+      updateReceive();
+    }
+  });
+
+  const maxBtn = container.querySelector("[data-flow-max]");
+  maxBtn?.addEventListener("click", () => {
+    if (!amountInput) return;
+    playSound(clickSound);
+    const maxValue = balance || 0;
+    amountInput.value = maxValue ? maxValue.toString() : "0";
+    normalizeInput();
+  });
+
+  container.querySelectorAll("[data-flow-percent]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      if (!amountInput) return;
+      const ratio = Number(btn.dataset.flowPercent);
+      if (!Number.isFinite(ratio)) return;
+      playSound(clickSound);
+      const value = (balance || 0) * ratio;
+      amountInput.value = value ? value.toFixed(4).replace(/\.?0+$/, "") : "0";
+      normalizeInput();
+    });
+  });
+
+  updateFiat();
+  updateReceive();
 }
 
 function simulateTx() {
@@ -254,5 +448,8 @@ function simulateTx() {
     hideLoading();
     playSound(successSound);
     modalBody.innerHTML = `<h3 style="color:cyan;">Transaction Successful ✅</h3>`;
+    setTimeout(() => {
+      hideModal();
+    }, 2000);
   }, 2500);
 }
